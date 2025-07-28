@@ -35,19 +35,24 @@ export function WixMediaImage({
       : { width, height }),
   };
 
-  return (
-    <div className={`flex items-center justify-center h-full`}>
-      <div className="overflow-hidden relative group w-full h-full">
-        <Image
-          {...styleProps}
-          src={imageUrl}
-          quality={90}
-          alt={alt}
-          className={`object-cover w-full ${
-            !disableZoom ? 'group-hover:scale-110' : ''
-          } transition duration-300 ease-in-out ${className}`}
-        />
-      </div>
+ return (
+  <div className={`flex items-center justify-center h-full`}>
+    <div className="overflow-hidden relative group w-full h-full">
+      <Image
+        src={imageUrl}
+        alt={alt}
+        quality={90}
+        className={`object-cover w-full ${
+          !disableZoom ? 'group-hover:scale-110' : ''
+        } transition duration-300 ease-in-out ${className}`}
+        width={objectFit ? undefined : width}
+        height={objectFit ? undefined : height}
+        fill={objectFit ? true : undefined}
+        sizes={objectFit ? sizes : undefined}
+        style={objectFit ? { objectFit } : undefined}
+      />
     </div>
-  );
+  </div>
+);
+
 }
