@@ -204,7 +204,7 @@ export const ProductSidebar: FC<ProductSidebarProps> = ({ product }) => {
             },
           }}
         >
-          <Accordion flush={true} >
+          <Accordion flush={true}>
             {product.additionalInfoSections!.map((info) => (
               <Accordion.Panel key={info.title}>
                 <Accordion.Title>
