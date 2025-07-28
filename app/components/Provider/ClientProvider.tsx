@@ -42,7 +42,9 @@ export function ClientProvider({ children }: ClientProviderProps): ReactNode {
   return (
     <WixClientContext.Provider value={wixClient}>
       <ManagedUIContext>
-        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
       </ManagedUIContext>
     </WixClientContext.Provider>
   );
