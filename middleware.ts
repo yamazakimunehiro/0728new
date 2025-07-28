@@ -19,9 +19,9 @@ export async function middleware(request: NextRequest) {
     auth: OAuthStrategy({ clientId: process.env.NEXT_PUBLIC_WIX_CLIENT_ID! }),
   });
   // const tokens = await wixClient.auth.generateVisitorTokens();
-// res.cookies.set(WIX_REFRESH_TOKEN, JSON.stringify(tokens.refreshToken), {
-//   maxAge: 60 * 60 * 24 * 30,
-// });
+  // res.cookies.set(WIX_REFRESH_TOKEN, JSON.stringify(tokens.refreshToken), {
+  //   maxAge: 60 * 60 * 24 * 30,
+  // });
   return res;
 }
 

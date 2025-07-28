@@ -1,7 +1,7 @@
 name: 'Setup Playwright With Cache'
 description: 'Setup Playwright With Cache'
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: Store Playwright's Version
       id: store-playwright-version
