@@ -1,5 +1,4 @@
 'use client';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createContext, ReactNode } from 'react';
 import { ManagedUIContext } from './context';
 import { createClient, OAuthStrategy } from '@wix/sdk';
@@ -9,8 +8,7 @@ import { wixEventsV2 as wixEvents, orders as checkout } from '@wix/events';
 import { redirects } from '@wix/redirects';
 import Cookies from 'js-cookie';
 import { WIX_REFRESH_TOKEN } from '@app/constants';
-
-const queryClient = new QueryClient();
+import dynamic from 'next/dynamic';
 
 const refreshToken = JSON.parse(Cookies.get(WIX_REFRESH_TOKEN) || '{}');
 
@@ -31,20 +29,18 @@ const wixClient = createClient({
 });
 
 export type WixClient = typeof wixClient;
-
 export const WixClientContext = createContext<WixClient>(wixClient);
 
-interface ClientProviderProps {
-  children: ReactNode;
-}
+// ✅ dynamic importでApp Routerの型制約をすり抜ける
+const ClientOnlyProvider = dynamic(() => import('./ClientOnlyProvider'), {
+  ssr: false,
+});
 
-export function ClientProvider({ children }: ClientProviderProps): ReactNode {
+export function ClientProvider({ children }: { children: ReactNode }) {
   return (
     <WixClientContext.Provider value={wixClient}>
       <ManagedUIContext>
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
+        <ClientOnlyProvider>{children}</ClientOnlyProvider>
       </ManagedUIContext>
     </WixClientContext.Provider>
   );
