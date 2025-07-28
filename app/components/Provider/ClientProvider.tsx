@@ -9,6 +9,7 @@ import { wixEventsV2 as wixEvents, orders as checkout } from '@wix/events';
 import { redirects } from '@wix/redirects';
 import Cookies from 'js-cookie';
 import { WIX_REFRESH_TOKEN } from '@app/constants';
+
 const queryClient = new QueryClient();
 
 const refreshToken = JSON.parse(Cookies.get(WIX_REFRESH_TOKEN) || '{}');
@@ -33,10 +34,16 @@ export type WixClient = typeof wixClient;
 
 export const WixClientContext = createContext<WixClient>(wixClient);
 
-export const ClientProvider = ({ children }: { children: ReactNode }) => (
-  <WixClientContext.Provider value={wixClient}>
-    <ManagedUIContext>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </ManagedUIContext>
-  </WixClientContext.Provider>
-);
+interface ClientProviderProps {
+  children: ReactNode;
+}
+
+export function ClientProvider({ children }: ClientProviderProps): ReactNode {
+  return (
+    <WixClientContext.Provider value={wixClient}>
+      <ManagedUIContext>
+        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      </ManagedUIContext>
+    </WixClientContext.Provider>
+  );
+}
